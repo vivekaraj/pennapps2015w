@@ -1,66 +1,41 @@
 var express = require('express');
 var router = express.Router();
 
+
 router.get('/', function(req, res) {
   return res.render('index', {
     title: 'babycall.me'
   });
 });
 
-router.get('/getRestaurant', function(req, res) {
+/*
+
+router.post('/getRestaurant', function(req, res) {
 
 });
 
-router.
-
-router.get('/getUserMenu', function(req, res) {
+router.post('/getUserMenu', function(req, res) {
 
 });
 
-router.get('/getFriends', function(req, res) {
+router.post('/getFriends', function(req, res) {
 
 });
 
-router.get('/confirmOrder', function(req, res) {
+router.post('/friendOrders', function(req, res) {
 
 });
 
-router.get('/friendOrders/:uniqueId/:restaurantId', function(req, res) {
+router.post('/confirmOrder', function(req, res) {
 
 });
 
-
+*/
 
 router.get('/success', function(req, res) {
   return res.render('success', {
     title: 'babycall.me'
   });
-});
-
-router.get('/postmates', function(req, res) {
-console.log("at postmates");
-  var pickup_address = "60 South 38th Street, Philadelphia, PA";
-
-var dropoff_address = "3910 Irving Street, Philadelphia, PA";
-
-fee = []; 
-
-var Postmates = require('postmates');
-
-var postmates = new Postmates('', '');
-
-var delivery = {
-  pickup_address: pickup_address,
-  dropoff_address: dropoff_address
-};
-
-postmates.quote(delivery, function(err, res2) {
-  console.log(res2.body.fee); // 799
-
-return res.render('yelp.jade', {pickup_address: pickup_address, dropoff_address: dropoff_address, fee: res2.body.fee} );
-
-});
-
 });
 
 router.get('/error', function(req, res) {
