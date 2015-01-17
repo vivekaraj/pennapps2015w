@@ -7,6 +7,30 @@ router.get('/', function(req, res) {
   });
 });
 
+router.get('/getRestaurant', function(req, res) {
+
+});
+
+router.
+
+router.get('/getUserMenu', function(req, res) {
+
+});
+
+router.get('/getFriends', function(req, res) {
+
+});
+
+router.get('/confirmOrder', function(req, res) {
+
+});
+
+router.get('/friendOrders/:uniqueId/:restaurantId', function(req, res) {
+
+});
+
+
+
 router.get('/success', function(req, res) {
   return res.render('success', {
     title: 'babycall.me'
