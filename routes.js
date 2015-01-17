@@ -13,6 +13,32 @@ router.get('/success', function(req, res) {
   });
 });
 
+router.get('/postmates', function(req, res) {
+console.log("at postmates");
+  var pickup_address = "60 South 38th Street, Philadelphia, PA";
+
+var dropoff_address = "3910 Irving Street, Philadelphia, PA";
+
+fee = []; 
+
+var Postmates = require('postmates');
+
+var postmates = new Postmates('cus_KAefIoO_AD5TbV', '334e74ce-2d20-4055-9480-f39f9a385e12');
+
+var delivery = {
+  pickup_address: pickup_address,
+  dropoff_address: dropoff_address
+};
+
+postmates.quote(delivery, function(err, res2) {
+  console.log(res2.body.fee); // 799
+
+return res.render('yelp.jade', {pickup_address: pickup_address, dropoff_address: dropoff_address, fee: res2.body.fee} );
+
+});
+
+});
+
 router.get('/error', function(req, res) {
   return res.render('error', {
     title: 'babycall.me'
