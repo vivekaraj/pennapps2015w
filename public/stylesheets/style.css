@@ -1,0 +1,93 @@
+body {
+  padding-left: 50px;
+  padding-top: 10px;
+  font: 14px sans-serif, Helvetica, Arial;
+  text-align: center;
+}
+img {
+	padding-top: 3em;
+}
+input {
+	width: 6em;
+	font-family: sans-serif, Helvetica, Arial;
+	text-align: center;
+}
+
+#button {
+  padding:5px;
+  background-color: #585C5F;
+  border: 1px solid #585C5F;
+  color:#000;
+  text-decoration:none;
+  color:white;
+  width: 6em;
+  height: 2em;
+}
+
+#button:hover {
+  padding:5px;
+  background-color: #7FBCF5;
+  border: 1px solid #7FBCF5;
+  color:#000;
+  text-decoration:none;
+  color:white;
+}
+
+#button:focus {
+  padding:5px;
+  background-color: #7FBCF5;
+  border: 1px solid #7FBCF5;
+  color:#000;
+  text-decoration:none;
+  color:white;
+}
+#unsubscribe {
+	padding:5px;
+	background-color:white;
+	border:white;
+	text-decoration:none;
+	color:#808080;
+	font-size: 0.7em;
+}
+
+#unsubscribe:hover {
+	padding:5px;
+	background-color:white;
+	border:white;
+	text-decoration:none;
+	color:#BE2B2B;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+input::-webkit-clear-button {
+	-webkit-appearance:none;
+	margin:0;
+}
+
+p {
+	font-size: 2em;
+	color: #808080;
+}
+
+p#bottomunsubscribe {
+	font-family: sans-serif, Helvetica, Arial;
+	text-align: right;
+}
+
+#unsubscribenumber {
+	width:5.5em;
+	height:1.2em;
+}
+
+#errormessage {
+	font-family: sans-serif, Helvetica, Arial;
+	text-align: center;
+	color:#C60808;
+}
+
+#successmessage {
+	font-family: sans-serif, Helvetica, Arial;
+	text-align: center;
+	color:#17CA62;
+}

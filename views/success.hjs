@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <img src='/images/logo.jpg' alt='Our Logo' style='width:90em;height=20em'/>
+    <form action='/create' method='post'>
+      <p> I want to leave my house at 
+        <input type='time' name='tim' value="12:00" style="font-size: 1em" class="input-no-spinner">
+        .
+      </p>
+      <p> I take 
+        <input type='number' name='mins' placeholder='minutes' style="font-size: 1em" class="input-no-spinner">
+        to get ready.
+      </p>
+      <p> Phone Number 
+        <input type='number' name='num' placeholder='1112223333' style="font-size: 1em" class="input-no-spinner">
+      </p>
+      <input id="button" type='submit' value='Submit' style="font-size: 2em;">
+    </form>
+    <p id="successmessage"> We have successfully completed your request!</p> 
+    <form action='/delete' method='post'>
+      <p id="bottomunsubscribe" style="line-height:2em;">
+        <input id="unsubscribenumber" type='number' name='num1' placeholder='Phone No' style="font-size: 0.7em" class="input-no-spinner">
+        <input id="unsubscribe" type="button" value="Unsubscribe">
+      </p>
+    </form>
+  </body>
+</html>
