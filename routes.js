@@ -29,6 +29,24 @@ router.post('/getRestaurant', function(req, res) {
 
   curl.request({
     url: 'http://api.locu.com/v2/venue/search'
+    method: 'POST',
+    data: {
+      "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
+      "fields" : [ "name", "menus" ],
+      "venue_queries" : [
+        {
+          "location" : { "locality": "Philadelphia", "region" : "PA"},
+          "name": "Pattaya",
+          "menus" : { "$present" : true }
+
+        }
+      ],
+      "menu_item_queries" : [
+        {
+          "price" : {"$present" : true}
+        }
+      ]
+    }
   }, function (err, data, meta) {
       console.log("function entered..");
   });
