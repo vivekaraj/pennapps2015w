@@ -54,7 +54,7 @@ router.get('/incrCount', function(req, res) {
 });
 
 router.post('/getRestaurant', function(req, res) {
-/*
+
   req.session.userstreet = req.body.userstreet;
   req.session.usercity = req.body.usercity;
   req.session.userstate = req.body.userstate;
@@ -140,7 +140,7 @@ router.post('/getRestaurant', function(req, res) {
 
       
   });
-*/
+
 });
 
 router.post('/submitUserOrder', function(req, res) {
