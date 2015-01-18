@@ -71,6 +71,7 @@ router.post('/getRestaurant', function(req, res) {
     data: d
   }, function (err, data, meta) {
       var temp = data;
+      console.log(temp);
       var venues = JSON.parse(temp).venues;
       var location = venues[0].location;
       console.log("Location: " + location);
@@ -101,8 +102,6 @@ router.post('/getRestaurant', function(req, res) {
               prices.push(content.price);
               req.session.foods = foods;
               req.session.prices = prices;
-              console.log("Name: " + content.name);
-              console.log("Price: " + content.price);
             }
           }
         }
