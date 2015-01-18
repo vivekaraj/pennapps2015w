@@ -30,7 +30,9 @@ mandrill('/messages/send', {
 });
 console.log("DONE!");
 
+
 router.get('/', function(req, res) {
+  req.session.count = 1;
   return res.render('index', {
     title: 'Group Chow'
   });
@@ -45,7 +47,7 @@ router.get('/getFriends', function(req, res) {
 
 router.get('/incrCount', function(req, res) {
   if(req.session.count == null) {
-    req.session.count = 0;
+    req.session.count = 1;
   }
   req.session.count = req.session.count + 1;
   res.redirect('/getFriends');
@@ -164,6 +166,41 @@ router.post('/submitUserOrder', function(req, res) {
   });
   var order = "" + JSON.stringify(val);
   req.session.order = order;
+  res.render('getFriends', {
+    title: 'Group Chow',
+    count: req.session.count
+  });
+});
+
+router.post('/submitFriends', function(req, res) {
+  var count = req.session.count;
+  var names = [];
+  var emails = [];
+  for(var i = 1; i <= count; i++) {
+    eval("names.push(req.body.name" + i + ")");
+    eval("emails.push(req.body.email" + i + ")");
+  }
+  var formattedList = [];
+  for(var i=0; i<emails.length; i++) {
+    formattedList.push({email: emails[i], name: names[i]});
+  }
+  console.log("formatted list is: " + formattedList);
+  mandrill('/messages/send', {
+    message: {
+      to: formattedList,
+      from_email: 'you@domain.com',
+      subject: "hello world",
+      text: "mandrill test"
+    }
+  }, function(err, resp)
+  {
+    if (err) console.log( JSON.stringify(error) );
+    else console.log(resp);
+  });
+  console.log("DONE!");
+  return res.render('orderPlaced', {
+    title: 'Group Chow',
+  });
 });
 
 

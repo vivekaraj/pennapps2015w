@@ -5,14 +5,14 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h2> Send to friends! </h2>    
-    <form action='/getRestaurant' method='post'>      
+    <h2> Now invite some friends to be a part of your order! </h2>    
+    <form action='/submitFriends' method='post'>      
       <% for(var i = 0; i < count; i++) {%>
         <input type='text' name='name<%=i+1%>' placeholder='Friend name <%=i+1%>' style="font-size: 2em" size="70"> <input type='text' name='email<%=i+1%>' placeholder='Friend email <%=i+1%>' style="font-size: 2em"> <br>
       <% } %>
-    </form>
-    <a href="/incrCount">Add more friends</a> <br>
     <input id="button" type='submit' value='Submit' style="font-size: 2em"> 
+    </form>
+    <a href="/incrCount">Add more friends</a> <br>    
   </body>
 </html> 
 
