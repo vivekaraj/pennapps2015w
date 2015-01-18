@@ -3,6 +3,7 @@ var router = express.Router();
 var curl = require('curlrequest');
 var Postmates = require('postmates');
 var postmates = new Postmates('cus_KAefIoO_AD5TbV', '334e74ce-2d20-4055-9480-f39f9a385e12');
+var fs = require('fs');
 
 //email stuff - should be straightforward
 
@@ -36,6 +37,7 @@ router.post('/getRestaurant', function(req, res) {
   req.session.userstreet = req.body.userstreet;
   req.session.usercity = req.body.usercity;
   req.session.userstate = req.body.userstate;
+  req.session.restname = req.body.restname;
 
   console.log("function starting..");
   var d = JSON.stringify({
@@ -145,6 +147,28 @@ router.post('/submitUserOrder', function(req, res) {
     orderedPrices: orderedPrices
   });
   var order = "" + JSON.stringify(val);
+
+  fs.appendFile('data/data.txt', order, function(err) {
+    if(err) throw err;
+    console.log("File appended");
+  });
+
+  var val1 = [];
+  val1.push({
+    restname: req.session.restname,
+    restcity: req.session.city,
+    reststate: req.session.state,
+    userstreet: req.session.userstreet,
+    usercity: req.sesssion.usercity,
+    userstate: req.session.userstate
+  });
+  var order1 = "" + JSON.stringify(val1);
+
+  fs.appendFile('data/restaurant.txt', order1, function(err) {
+    if(err) throw err;
+    console.log("restaurant recorded");
+  });
+
   req.session.order = order;
   res.render('getFriends', {
     title: 'Group Chow',
@@ -165,7 +189,6 @@ router.post('/submitFriends', function(req, res) {
     formattedList.push({email: emails[i], name: names[i]});
   }
   console.log("formatted list is: " + formattedList);
-  var fs = require('fs');
   fs.readFile('data/numUsers.txt', function(err, data) {
     var ct = (+data.toString() + 1);
     fs.unlink('data/numUsers.txt', function(err) {
@@ -192,6 +215,100 @@ router.post('/submitFriends', function(req, res) {
     
   });
   
+});
+
+router.get('/theGroupChow/:room', function(req, res) {
+  var room = req.params.room;
+
+  fs.readFile('data/restaurant.txt', function(err, data) {
+    var str = data.toString();
+    var son = JSON.parse(str);
+
+    var restname = son.restname;
+    var restcity = son.restcity;
+    var reststate = son.reststate;
+    req.session.userstreet = son.userstreet;
+    req.session.usercity = son.usercity;
+    req.session.userstate = son.userstate;
+
+    var d = JSON.stringify({
+      "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
+      "fields" : [ "name", "menus", "location" ],
+      "venue_queries" : [
+        {
+          "location" : { "locality": restcity, "region" : reststate},
+          "name": restname,
+          "menus" : { "$present" : true }
+        }
+      ],
+      "menu_item_queries" : [
+        {
+          "price" : {"$present" : true}
+        }
+      ]
+    });
+    curl.request({
+      url: 'http://api.locu.com/v2/venue/search',
+      method: 'POST',
+      data: d
+    }, function (err, data, meta) {
+        var temp = data;
+        var venues = JSON.parse(temp).venues;
+        var location = venues[0].location;
+        console.log("Location: " + location);
+        //var sections = JSON.parse(venues).sections;
+        var menus = venues[0].menus;
+        console.log("Location: " + location);
+        req.session.address = location.address1;
+        req.session.city = location.locality;
+        req.session.state = location.region;
+        console.log("City: " + req.session.city + "//" + req.session.state);
+        console.log("Menus: " + menus);
+        console.log("Venues: " + venues);
+        var foods = [];
+        var prices = [];
+        for(var i = 0; i < menus.length; i++) {
+          console.log("Section " + i + ": " + menus[i]);
+          var menu = menus[i];
+          var sections = menu.sections;
+          for(var j = 0; j < sections.length; j++) {
+            var section = sections[j];
+            var subsections = section.subsections;
+            for(var k = 0; k < subsections.length; k++) {
+              var subsection = subsections[k];
+              var contents = subsection.contents;
+              for(var l = 0; l < contents.length; l++) {
+                var content = contents[l];
+                foods.push(content.name);
+                prices.push(content.price);
+                req.session.foods = foods;
+                req.session.prices = prices;
+                console.log("Name: " + content.name);
+                console.log("Price: " + content.price);
+              }
+            }
+          }
+        }
+
+      var delivery = {
+        pickup_address: req.session.address + ", " + req.session.city + ", " + req.session.state,
+        dropoff_address: req.session.userstreet + ", " + req.session.usercity + ", " + req.session.userstate
+      };
+      postmates.quote(delivery, function(err, res2) {
+        var fee;
+        fee = '$' + res2.body.fee/100;
+        res.render('/friendOrders', {
+          title: 'Group Chow',
+          foods: foods,
+          prices: prices,
+          pickup_address: req.session.address + ", " + req.session.city + ", " + req.session.state,
+          dropoff_address: req.session.userstreet + ", " + req.session.usercity + ", " + req.session.userstate,
+          fee: fee
+        });
+        console.log("exits");
+      });
+    });
+  });
 });
 
 
