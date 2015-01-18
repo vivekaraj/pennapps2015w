@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h2> Welcome to GroupChow! </h2>
+    <!-- <img src='/images/logo.jpg' alt='Our Logo' style='width:90em;height=20em'/> -->
+    <form action='/getRestaurant' method='post'>
+      <input type='text' name='restname' placeholder='Enter restaurant name.' style="font-size: 2em" value="Steaks on South"> in 
+      <input type='text' name='city' placeholder='City' style="font-size: 2em" value="Philadelphia">,
+      <input type='text' name='state' placeholder='State' style="font-size: 2em" value="PA"> 
+      <input id="button" type='submit' value='Submit' style="font-size: 2em;"> 
+    </form> 
+  </body>
+</html> 
