@@ -2,6 +2,32 @@ var express = require('express');
 var router = express.Router();
 var curl = require('curlrequest');
 
+//email stuff - should be straightforward
+
+var mandrill = require('node-mandrill')('YC4wihw55JFZz1p87ZDiUg');
+//two lists, 1:1 correspondence
+var emails = ['kwhuo68@gmail.com', 'triplep3@gmail.com'];
+var names = ['Kevin H', 'Vivek R'];
+// the right npm install is: node-mandrill
+var formattedList = [];
+for(var i=0; i<emails.length; i++) {
+  formattedList.push({email: emails[i], name: names[i]});
+}
+console.log("formatted list is: " + formattedList);
+mandrill('/messages/send', {
+  message: {
+    to: formattedList,
+    from_email: 'you@domain.com',
+    subject: "hello world",
+    text: "mandrill test"
+  }
+}, function(err, resp)
+{
+  if (err) console.log( JSON.stringify(error) );
+  else console.log(resp);
+});
+console.log("DONE!");
+
 router.get('/', function(req, res) {
   return res.render('index', {
     title: 'Group Chow'
