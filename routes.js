@@ -50,7 +50,7 @@ router.post('/getRestaurant', function(req, res) {
   console.log("function starting..");
   var d = JSON.stringify({
       "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
-      "fields" : [ "name", "menus", "location" ],
+      "fields" : [ "name", "menus", "location", "contact" ],
       "venue_queries" : [
         {
           "location" : { "locality": req.body.city, "region" : req.body.state},
@@ -74,6 +74,8 @@ router.post('/getRestaurant', function(req, res) {
       console.log(temp);
       var venues = JSON.parse(temp).venues;
       var location = venues[0].location;
+      req.session.restphone = venues[0].contact.phone;
+      console.log("!PHONE:" + req.session.restphone);
       console.log("Location: " + location);
       //var sections = JSON.parse(venues).sections;
       var menus = venues[0].menus;
@@ -114,6 +116,7 @@ router.post('/getRestaurant', function(req, res) {
     postmates.quote(delivery, function(err, res2) {
       var fee;
       fee = '$' + res2.body.fee/100;
+      req.session.fee = fee;
       res.render('userOrders', {
         title: 'Group Chow',
         foods: foods,
@@ -167,7 +170,9 @@ router.post('/submitUserOrder', function(req, res) {
     reststate: req.session.state,
     userstreet: req.session.userstreet,
     usercity: req.session.usercity,
-    userstate: req.session.userstate
+    userstate: req.session.userstate,
+    restphone: req.session.restphone,
+    fee: req.session.fee
   });
   var order1 = "" + JSON.stringify(val1);
   order1 = order1.substring(1, order1.length-1);
@@ -377,10 +382,23 @@ router.get('/finalOrder/:room', function(req, res) {
     var str = data.toString();
     var temp = str.substring(1, str.length-1);
     var list = temp.split("][");
-    res.render('orderConfirmation', {
+    fs.readFile('data/restaurant.txt', function(err, data) {
+      var temp = data.toString();
+      var json = JSON.parse(temp);
+      res.render('orderConfirmation', {
       title:'Group Chow',
-      list:list
+      list:list,
+      fee:json.fee,
+      phone:json.restphone
+      });
     });
+    
+  });
+});
+
+router.post('/confirm', function(req, res) {
+  res.render('thankyou', {
+    title:'Group Chow'
   });
 });
 
@@ -530,7 +548,7 @@ module.exports = router;
 /*
 CURL -X POST https://api.locu.com/v2/venue/search -d '{
     "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
-     "fields" : [ "location"  ],
+     "fields" : [ "contact"  ],
      "venue_queries" : [
        {
          "name" : "Pattaya",

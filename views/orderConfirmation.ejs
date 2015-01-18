@@ -20,9 +20,12 @@
         <%=foods[j]%> <%=prices[j]%> <br>
       <% } %>
       <% grandTotal = grandTotal + total; %>
-      <h2> TOTAL: <%=total%> </h2>
+      <h2> TOTAL: $<%=total%> </h2>
     <% } %> 
-    <h1> GRAND TOTAL: <%=Math.round(grandTotal * 100) / 100 %> </h1>
+    <h1> GRAND TOTAL: $<%=Math.round(grandTotal * 100) / 100 %> + DELIVERY FEE: <%=fee%> </h1>
+    <h2> Now, call this number to place your order: <%=phone%> </h2>
+    <h2> Get it delivered via PostMates!!! <form action = '/confirm' method='post'> <input id="button" type='submit' value="Submit order to PostMaster!" style="font-size: 2em"> </form> </h2>
+
   </body>
 </html> 
 
