@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 
 
 router.get('/', function(req, res) {
@@ -21,6 +22,35 @@ router.get('/incrCount', function(req, res) {
   }
   req.session.count = req.session.count + 1;
   res.redirect('/getFriends');
+});
+
+router.post('/getRestaurant', function(req, res) {
+  console.log("function starting..");
+  var url = "http://api.locu.com/v1_0/venue/search/?name=" + 
+
+req.body.restname +"&locality=" + req.body.city + "&region=" + 
+
+req.body.state+ 
+
+"&api_key=99018cb9712f77ed7276576673b997470cd3f9ec";
+
+  request({
+    url: url,
+    json: true
+  }, function (error, response, body) { 
+
+      if (!error && response.statusCode === 200) {
+          console.log(body);
+
+          var menuJSON = JSON.parse(body);
+          console.log(menuJSON[0].objects[0]);
+      }
+  });
+
+  console.log("function done..");
+
+
+  //return res.redirect('/getFriends');
 });
 
 

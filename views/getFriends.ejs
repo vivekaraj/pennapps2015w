@@ -6,8 +6,7 @@
   </head>
   <body>
     <h2> Send to friends! </h2>    
-    <form action='/getRestaurant' method='post'>
-      
+    <form action='/getRestaurant' method='post'>      
       <% for(var i = 0; i < count; i++) {%>
         <input type='text' name='name<%=i+1%>' placeholder='Friend name <%=i+1%>' style="font-size: 2em" size="70"> <input type='text' name='email<%=i+1%>' placeholder='Friend email <%=i+1%>' style="font-size: 2em"> <br>
       <% } %>
