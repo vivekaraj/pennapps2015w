@@ -6,29 +6,7 @@ var postmates = new Postmates('cus_KAefIoO_AD5TbV', '334e74ce-2d20-4055-9480-f39
 
 //email stuff - should be straightforward
 
-var mandrill = require('node-mandrill')('YC4wihw55JFZz1p87ZDiUg');
-//two lists, 1:1 correspondence
-var emails = ['kwhuo68@gmail.com', 'triplep3@gmail.com'];
-var names = ['Kevin H', 'Vivek R'];
-// the right npm install is: node-mandrill
-var formattedList = [];
-for(var i=0; i<emails.length; i++) {
-  formattedList.push({email: emails[i], name: names[i]});
-}
-console.log("formatted list is: " + formattedList);
-mandrill('/messages/send', {
-  message: {
-    to: formattedList,
-    from_email: 'you@domain.com',
-    subject: "hello world",
-    text: "mandrill test"
-  }
-}, function(err, resp)
-{
-  if (err) console.log( JSON.stringify(error) );
-  else console.log(resp);
-});
-console.log("DONE!");
+
 
 
 router.get('/', function(req, res) {
@@ -54,7 +32,7 @@ router.get('/incrCount', function(req, res) {
 });
 
 router.post('/getRestaurant', function(req, res) {
-
+  req.session.username = req.body.username;
   req.session.userstreet = req.body.userstreet;
   req.session.usercity = req.body.usercity;
   req.session.userstate = req.body.userstate;
@@ -187,22 +165,33 @@ router.post('/submitFriends', function(req, res) {
     formattedList.push({email: emails[i], name: names[i]});
   }
   console.log("formatted list is: " + formattedList);
-  mandrill('/messages/send', {
-    message: {
-      to: formattedList,
-      from_email: 'you@domain.com',
-      subject: "hello world",
-      text: "mandrill test"
-    }
-  }, function(err, resp)
-  {
-    if (err) console.log( JSON.stringify(error) );
-    else console.log(resp);
+  var fs = require('fs');
+  fs.readFile('data/numUsers.txt', function(err, data) {
+    var ct = (+data.toString() + 1);
+    fs.unlink('data/numUsers.txt', function(err) {
+      fs.appendFile('data/numUsers.txt', "" + ct, function(err) {
+        var mandrill = require('node-mandrill')('YC4wihw55JFZz1p87ZDiUg');
+        mandrill('/messages/send', {
+        message: {
+          to: formattedList,
+          from_email: 'you@domain.com',
+          subject: "New GroupChow request from " + req.session.username + "!",
+          text: "www.groupchow.herokuapp.com/theGroupChow/room" + ct
+        }
+        }, function(err, resp)
+        {
+          if (err) console.log( JSON.stringify(error) );
+          else console.log(resp);
+        });
+        console.log("DONE!");
+        return res.render('orderPlaced', {
+          title: 'Group Chow',
+        });
+      });
+    });
+    
   });
-  console.log("DONE!");
-  return res.render('orderPlaced', {
-    title: 'Group Chow',
-  });
+  
 });
 
 

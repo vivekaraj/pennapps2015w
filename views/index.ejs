@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+ <link rel='stylesheet' href='stylesheets/bootstrap.min.css'>
+ <link rel='stylesheet' href='stylesheets/bootstrap-responsive.css'>
 <html>
   <head>
     <title><%=title%></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <h2> Welcome to GroupChow! </h2>
     <form action='/getRestaurant' method='post'>
 
     <input type='text' name='username' placeholder='Your name.' style="font-size: 2em">
@@ -122,7 +124,6 @@
         <option value="WY">WY</option>
       </select>  
       <input id="button" type='submit' value='Submit' style="font-size: 2em"> <br>
-      <a href='/getFriends'>Go to getFriends</a>
     </form> 
   </body>
 </html> 
