@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request');
-
+var curl = require('curlrequest');
 
 router.get('/', function(req, res) {
   return res.render('index', {
@@ -13,7 +12,7 @@ router.get('/getFriends', function(req, res) {
   return res.render('getFriends', {
     title: 'Group Chow',
     count: req.session.count
-  });
+  })
 });
 
 router.get('/incrCount', function(req, res) {
@@ -26,24 +25,16 @@ router.get('/incrCount', function(req, res) {
 
 router.post('/getRestaurant', function(req, res) {
   console.log("function starting..");
-  var url = "http://api.locu.com/v1_0/venue/search/?name=" + req.body.restname +"&locality=" + req.body.city + "&region=" + req.body.state + "&api_key=99018cb9712f77ed7276576673b997470cd3f9ec";
+  var menuurl = "http://api.locu.com/v1_0/venue/search/?has_menu=TRUE&name=" + req.body.restname +"&locality=" + req.body.city + "&region=" + req.body.state + "&api_key=99018cb9712f77ed7276576673b997470cd3f9ec";
 
-  request({
-    url: url,
-    json: true
-  }, function (error, response, body) { 
-
-      if (!error && response.statusCode === 200) {
-          console.log(body);
-
-          console.log(body.objects[0]);
-      }
+  curl.request({
+    url: 'http://api.locu.com/v2/venue/search'
+  }, function (err, data, meta) {
+      console.log("function entered..");
   });
 
   console.log("function done..");
 
-
-  //return res.redirect('/getFriends');
 });
 
 
