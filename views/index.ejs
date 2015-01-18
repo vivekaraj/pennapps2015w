@@ -5,7 +5,8 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    
+    <form action='/getRestaurant' method='post'>
+
     <input type='text' name='username' placeholder='Your name.' style="font-size: 2em">
     <input type='text' name='userphonenumber' placeholder='Your contact number.' style="font-size: 2em"> <br>
     <input type='text' name='userstreet' placeholder='Your address.' style="font-size: 2em">
@@ -66,7 +67,6 @@
 
     <h2> Enter restaurant information </h2>
     <!-- <img src='/images/logo.jpg' alt='Our Logo' style='width:90em;height=20em'/> -->
-    <form action='/getRestaurant' method='post'>
       <input type='text' name='restname' placeholder='Enter restaurant name.' style="font-size: 2em" value="Pattaya">
       <input type='text' name='city' placeholder='City' style="font-size: 2em" value="Philadelphia">    
       <select name='state'> <br>

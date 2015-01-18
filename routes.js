@@ -89,8 +89,7 @@ router.post('/getRestaurant', function(req, res) {
       //var sections = JSON.parse(venues).sections;
       var menus = venues[0].menus;
       console.log("Location: " + location);
-      var tempAddr = "" + location.address1;
-      req.session.address = tempAddr.substring(0, tempAddr.length - 1) + "reet";
+      req.session.address = location.address1;
       req.session.city = location.locality;
       req.session.state = location.region;
       console.log("City: " + req.session.city + "//" + req.session.state);
@@ -125,9 +124,9 @@ router.post('/getRestaurant', function(req, res) {
       pickup_address: req.session.address + ", " + req.session.city + ", " + req.session.state,
       dropoff_address: req.session.userstreet + ", " + req.session.usercity + ", " + req.session.userstate
     };
-    var fee;
-    postmates.quote(delivery, function(err, res2) {fee = res2.body.fee;});
-
+    postmates.quote(delivery, function(err, res2) {
+      var fee;
+      fee = '$' + res2.body.fee/100;
       res.render('userOrders', {
         title: 'Group Chow',
         foods: foods,
@@ -137,6 +136,9 @@ router.post('/getRestaurant', function(req, res) {
         fee: fee
       });
       console.log("exits");
+    });
+
+      
   });
 
 });
