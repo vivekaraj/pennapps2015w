@@ -25,14 +25,13 @@ router.get('/incrCount', function(req, res) {
 
 router.post('/getRestaurant', function(req, res) {
   console.log("function starting..");
-  var menuurl = "http://api.locu.com/v1_0/venue/search/?has_menu=TRUE&name=" + req.body.restname +"&locality=" + req.body.city + "&region=" + req.body.state + "&api_key=99018cb9712f77ed7276576673b997470cd3f9ec";
   var d = JSON.stringify({
       "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
       "fields" : [ "name", "menus" ],
       "venue_queries" : [
         {
-          "location" : { "locality": "Philadelphia", "region" : "PA"},
-          "name": "Pattaya",
+          "location" : { "locality": req.body.city, "region" : req.body.state},
+          "name": req.body.restname,
           "menus" : { "$present" : true }
 
         }
@@ -48,11 +47,40 @@ router.post('/getRestaurant', function(req, res) {
     method: 'POST',
     data: d
   }, function (err, data, meta) {
-      console.log(data);
-      console.log("blah");
+      var venues = JSON.parse(data).venues;
+      //var sections = JSON.parse(venues).sections;
+      var menus = venues[0].menus;
+      console.log("Menus: " + menus);
+      console.log("Venues: " + venues);  
+      var foods = [];
+      var prices = [];
+      for(var i = 0; i < menus.length; i++) {
+        console.log("Section " + i + ": " + menus[i]);
+        var menu = menus[i];
+        var sections = menu.sections;
+        for(var j = 0; j < sections.length; j++) {
+          var section = sections[j];
+          var subsections = section.subsections;
+          for(var k = 0; k < subsections.length; k++) {
+            var subsection = subsections[k];
+            var contents = subsection.contents;
+            for(var l = 0; l < contents.length; l++) {
+              var content = contents[l];
+              foods.push(content.name);
+              prices.push(content.price);
+              console.log("Name: " + content.name);
+              console.log("Price: " + content.price);
+            }
+          }
+        }
+      }
+      res.render('userOrders', {
+        title: 'Group Chow',
+        foods: foods,
+        prices: prices
+      });
+      console.log("exits");
   });
-
-  console.log("function done..");
 
 });
 
