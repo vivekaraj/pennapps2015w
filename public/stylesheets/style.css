@@ -7,8 +7,9 @@ body {
 img {
 	padding-top: 3em;
 }
+
 input {
-	width: 6em;
+	width: 10em;
 	font-family: sans-serif, Helvetica, Arial;
 	text-align: center;
 }

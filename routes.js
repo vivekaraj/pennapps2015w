@@ -4,9 +4,26 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
   return res.render('index', {
-    title: 'babycall.me'
+    title: 'Group Chow'
   });
 });
+
+router.get('/getFriends', function(req, res) {
+  return res.render('getFriends', {
+    title: 'Group Chow',
+    count: req.session.count
+  });
+});
+
+router.get('/incrCount', function(req, res) {
+  if(req.session.count == null) {
+    req.session.count = 0;
+  }
+  req.session.count = req.session.count + 1;
+  res.redirect('/getFriends');
+});
+
+
 
 /*
 
