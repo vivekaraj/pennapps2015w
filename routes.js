@@ -27,7 +27,7 @@ router.post('/getRestaurant', function(req, res) {
   console.log("function starting..");
   var d = JSON.stringify({
       "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
-      "fields" : [ "name", "menus" ],
+      "fields" : [ "name", "menus", "location" ],
       "venue_queries" : [
         {
           "location" : { "locality": req.body.city, "region" : req.body.state},
@@ -47,9 +47,17 @@ router.post('/getRestaurant', function(req, res) {
     method: 'POST',
     data: d
   }, function (err, data, meta) {
-      var venues = JSON.parse(data).venues;
+      var temp = data;
+      var venues = JSON.parse(temp).venues;
+      var location = venues[0].location;
+      console.log("Location: " + location);
       //var sections = JSON.parse(venues).sections;
       var menus = venues[0].menus;
+      console.log("Location: " + location);
+      req.session.address = location.address1;
+      req.session.city = location.locality;
+      req.session.state = location.region;
+      console.log("City: " + req.session.city + "//" + req.session.state);
       console.log("Menus: " + menus);
       console.log("Venues: " + venues);  
       var foods = [];
@@ -254,3 +262,23 @@ router.post('/create', function(req, res) {
 });
 
 module.exports = router;
+
+
+/*
+CURL -X POST https://api.locu.com/v2/venue/search -d '{
+    "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
+     "fields" : [ "location"  ],
+     "venue_queries" : [
+       {
+         "name" : "Pattaya",
+         "location" : { "locality" : "Philadelphia", "region" : "PA"},
+         "menus" : { "$present" : true }
+       }
+     ],
+     "menu_item_queries" : [
+       {
+         "price" : {"$present" : true }
+       }
+     ]
+  }'
+*/
