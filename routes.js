@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var curl = require('curlrequest');
+var Postmates = require('postmates');
+var postmates = new Postmates('cus_KAefIoO_AD5TbV', '334e74ce-2d20-4055-9480-f39f9a385e12');
 
 //email stuff - should be straightforward
 
@@ -50,6 +52,11 @@ router.get('/incrCount', function(req, res) {
 });
 
 router.post('/getRestaurant', function(req, res) {
+
+  req.session.userstreet = req.body.userstreet;
+  req.session.usercity = req.body.usercity;
+  req.session.userstate = req.body.userstate;
+
   console.log("function starting..");
   var d = JSON.stringify({
       "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
@@ -80,7 +87,8 @@ router.post('/getRestaurant', function(req, res) {
       //var sections = JSON.parse(venues).sections;
       var menus = venues[0].menus;
       console.log("Location: " + location);
-      req.session.address = location.address1;
+      var tempAddr = "" + location.address1;
+      req.session.address = tempAddr.substring(0, tempAddr.length - 1) + "reet";
       req.session.city = location.locality;
       req.session.state = location.region;
       console.log("City: " + req.session.city + "//" + req.session.state);
@@ -110,10 +118,21 @@ router.post('/getRestaurant', function(req, res) {
           }
         }
       }
+
+    var delivery = {
+      pickup_address: req.session.address + ", " + req.session.city + ", " + req.session.state,
+      dropoff_address: req.session.userstreet + ", " + req.session.usercity + ", " + req.session.userstate
+    };
+    var fee;
+    postmates.quote(delivery, function(err, res2) {fee = res2.body.fee;});
+
       res.render('userOrders', {
         title: 'Group Chow',
         foods: foods,
-        prices: prices
+        prices: prices,
+        pickup_address: req.session.address + ", " + req.session.city + ", " + req.session.state,
+        dropoff_address: req.session.userstreet + ", " + req.session.usercity + ", " + req.session.userstate,
+        fee: fee
       });
       console.log("exits");
   });

@@ -1,3 +1,5 @@
+<script type="text/javascript" src="postmates.js"></script> 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,8 +7,8 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <a href='/getFriends'>Go to getFriends</a>
-    <h2> Enter friends' email addresses </h2>
+    <h2> The estimated cost of your delivery from <%= pickup_address %> to <%= dropoff_address %> is <%= fee%>. </h2>
+    <h2> Which dishes would you like to order? </h2>
     <form action='/submitUserOrder' method='post'>
 
         <% for(var i = 0; i < foods.length; i++) { %>
