@@ -1,0 +1,95 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'node-mandrill' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 warn package.json fs@0.0.2 fs is also the name of a node core module.
+5 warn package.json fs@0.0.2 No description
+6 warn package.json fs@0.0.2 No repository field.
+7 warn package.json fs@0.0.2 No README data
+8 warn package.json http@0.0.0 http is also the name of a node core module.
+9 warn package.json http@0.0.0 No description
+10 warn package.json http@0.0.0 No repository field.
+11 warn package.json readline@0.0.3 readline is also the name of a node core module.
+12 verbose readDependencies using package.json deps
+13 verbose cache add [ 'node-mandrill@~1.4.28', null ]
+14 verbose cache add name=undefined spec="node-mandrill@~1.4.28" args=["node-mandrill@~1.4.28",null]
+15 verbose parsed url { protocol: null,
+15 verbose parsed url   slashes: null,
+15 verbose parsed url   auth: null,
+15 verbose parsed url   host: null,
+15 verbose parsed url   port: null,
+15 verbose parsed url   hostname: null,
+15 verbose parsed url   hash: null,
+15 verbose parsed url   search: null,
+15 verbose parsed url   query: null,
+15 verbose parsed url   pathname: 'node-mandrill@~1.4.28',
+15 verbose parsed url   path: 'node-mandrill@~1.4.28',
+15 verbose parsed url   href: 'node-mandrill@~1.4.28' }
+16 verbose cache add name="node-mandrill" spec="~1.4.28" args=["node-mandrill","~1.4.28"]
+17 verbose parsed url { protocol: null,
+17 verbose parsed url   slashes: null,
+17 verbose parsed url   auth: null,
+17 verbose parsed url   host: null,
+17 verbose parsed url   port: null,
+17 verbose parsed url   hostname: null,
+17 verbose parsed url   hash: null,
+17 verbose parsed url   search: null,
+17 verbose parsed url   query: null,
+17 verbose parsed url   pathname: '~1.4.28',
+17 verbose parsed url   path: '~1.4.28',
+17 verbose parsed url   href: '~1.4.28' }
+18 verbose addNamed [ 'node-mandrill', '~1.4.28' ]
+19 verbose addNamed [ null, '>=1.4.28-0 <1.5.0-0' ]
+20 silly lockFile 8a3b4a68-node-mandrill-1-4-28 node-mandrill@~1.4.28
+21 verbose lock node-mandrill@~1.4.28 /Users/vinayraj/.npm/8a3b4a68-node-mandrill-1-4-28.lock
+22 silly addNameRange { name: 'node-mandrill',
+22 silly addNameRange   range: '>=1.4.28-0 <1.5.0-0',
+22 silly addNameRange   hasData: false }
+23 verbose request where is /node-mandrill
+24 verbose request registry https://registry.npmjs.org/
+25 verbose request id a10aaaf7a93a92ea
+26 verbose url raw /node-mandrill
+27 verbose url resolving [ 'https://registry.npmjs.org/', './node-mandrill' ]
+28 verbose url resolved https://registry.npmjs.org/node-mandrill
+29 verbose request where is https://registry.npmjs.org/node-mandrill
+30 info trying registry request attempt 1 at 02:44:36
+31 verbose etag "E8NASMDDBFW2A9WRQV8WAITX2"
+32 http GET https://registry.npmjs.org/node-mandrill
+33 http 304 https://registry.npmjs.org/node-mandrill
+34 silly registry.get cb [ 304,
+34 silly registry.get   { date: 'Sun, 18 Jan 2015 07:44:37 GMT',
+34 silly registry.get     server: 'Apache',
+34 silly registry.get     via: '1.1 varnish',
+34 silly registry.get     'last-modified': 'Sun, 18 Jan 2015 07:44:37 GMT',
+34 silly registry.get     'cache-control': 'max-age=60',
+34 silly registry.get     etag: '"E8NASMDDBFW2A9WRQV8WAITX2"',
+34 silly registry.get     age: '0',
+34 silly registry.get     'x-served-by': 'cache-iad2141-IAD',
+34 silly registry.get     'x-cache': 'MISS',
+34 silly registry.get     'x-cache-hits': '0',
+34 silly registry.get     'x-timer': 'S1421567077.443443,VS0,VE13',
+34 silly registry.get     vary: 'Accept',
+34 silly registry.get     'content-length': '0',
+34 silly registry.get     'keep-alive': 'timeout=10, max=50',
+34 silly registry.get     connection: 'Keep-Alive' } ]
+35 verbose etag https://registry.npmjs.org/node-mandrill from cache
+36 silly addNameRange number 2 { name: 'node-mandrill',
+36 silly addNameRange   range: '>=1.4.28-0 <1.5.0-0',
+36 silly addNameRange   hasData: true }
+37 silly addNameRange versions [ 'node-mandrill', [ '0.1.0', '0.1.1', '1.0.0', '1.0.1' ] ]
+38 silly lockFile 8a3b4a68-node-mandrill-1-4-28 node-mandrill@~1.4.28
+39 silly lockFile 8a3b4a68-node-mandrill-1-4-28 node-mandrill@~1.4.28
+40 error notarget No compatible version found: node-mandrill@'>=1.4.28-0 <1.5.0-0'
+40 error notarget Valid install targets:
+40 error notarget ["0.1.0","0.1.1","1.0.0","1.0.1"]
+40 error notarget
+40 error notarget This is most likely not a problem with npm itself.
+40 error notarget In most cases you or one of your dependencies are requesting
+40 error notarget a package version that doesn't exist.
+41 error System Darwin 13.4.0
+42 error command "node" "/usr/local/bin/npm" "install" "node-mandrill"
+43 error cwd /Users/vinayraj/Desktop/pennapps2015w
+44 error node -v v0.10.35
+45 error npm -v 1.4.28
+46 error code ETARGET
+47 verbose exit [ 1, true ]
