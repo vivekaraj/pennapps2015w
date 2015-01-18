@@ -13,8 +13,8 @@ var mandrill = require('node-mandrill')('YC4wihw55JFZz1p87ZDiUg');
 
 
 router.get('/', function(req, res) {
-  fs.unlink('/data/data.txt', function(err) {
-    fs.unlink('/data/restaurant.txt', function(err) {
+  fs.unlink('data/data.txt', function(err) {
+    fs.unlink('data/restaurant.txt', function(err) {
       req.session.count = 1;
       return res.render('index', {
         title: 'Group Chow'
