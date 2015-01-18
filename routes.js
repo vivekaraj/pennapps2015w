@@ -159,10 +159,11 @@ router.post('/submitUserOrder', function(req, res) {
     restcity: req.session.city,
     reststate: req.session.state,
     userstreet: req.session.userstreet,
-    usercity: req.sesssion.usercity,
+    usercity: req.session.usercity,
     userstate: req.session.userstate
   });
   var order1 = "" + JSON.stringify(val1);
+  order1 = order1.substring(1, order1.length-1);
 
   fs.appendFile('data/restaurant.txt', order1, function(err) {
     if(err) throw err;
@@ -225,6 +226,7 @@ router.get('/theGroupChow/:room', function(req, res) {
     var son = JSON.parse(str);
 
     var restname = son.restname;
+    console.log("RESTNAME! " + restname);
     var restcity = son.restcity;
     var reststate = son.reststate;
     req.session.userstreet = son.userstreet;
@@ -283,8 +285,6 @@ router.get('/theGroupChow/:room', function(req, res) {
                 prices.push(content.price);
                 req.session.foods = foods;
                 req.session.prices = prices;
-                console.log("Name: " + content.name);
-                console.log("Price: " + content.price);
               }
             }
           }
@@ -297,7 +297,7 @@ router.get('/theGroupChow/:room', function(req, res) {
       postmates.quote(delivery, function(err, res2) {
         var fee;
         fee = '$' + res2.body.fee/100;
-        res.render('/friendOrders', {
+        res.render('friendOrders', {
           title: 'Group Chow',
           foods: foods,
           prices: prices,
@@ -308,6 +308,41 @@ router.get('/theGroupChow/:room', function(req, res) {
         console.log("exits");
       });
     });
+  });
+});
+
+router.post('/submitFriendOrder', function(req, res) {
+  var name = req.body.name;
+  var foods = req.session.foods;
+  var prices = req.session.prices;
+  var orderedFoods = [];
+  var orderedPrices = [];
+  for(var i = 0; i < foods.length; i++) {
+    var bool = "0";
+    eval("bool = req.body.food" + i);
+    console.log(i + "//" + bool);
+    if(bool != null && "" + bool === "1") {
+      orderedFoods.push(foods[i]);
+      orderedPrices.push(prices[i]);
+    }
+  }
+  req.session.orderedFoods = orderedFoods;
+  req.session.orderedPrices = orderedPrices;
+  var val = [];
+  val.push({
+    name: name,
+    orderedFoods: orderedFoods,
+    orderedPrices: orderedPrices
+  });
+  var order = "" + JSON.stringify(val);
+
+  fs.appendFile('data/data.txt', order, function(err) {
+    if(err) throw err;
+    console.log("File appended");
+  });
+
+  res.render('friendOrderPlaced', {
+    title: 'Group Chow',
   });
 });
 
