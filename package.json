@@ -15,9 +15,8 @@
     "mandrill": "~0.1.0",
     "morgan": "~1.2.3",
     "node-mandrill" : "~1.0.1",
-    "path:": "~0.11.4",
+    "path": "~0.11.4",
     "postmates": "~1.0.2",
-    "readline": "~0.0.7",
-    "twilio": "~1.7.0"
+    "readline": "~0.0.7"
   }
 }
