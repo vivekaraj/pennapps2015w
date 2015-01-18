@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+  <h1> Create New order </h1>
+    <form action='/order' method='post'>
+        Restaurant<input type='text' name='food' >
+
+        City<input type='text' name='city' >
+
+        Delivery<input type='text' name='home' >
+
+        <input id="button" type='submit' value='Submit' style="font-size: 2em;">
+    
+    </form>
+
+
+  </body>
+</html> 
