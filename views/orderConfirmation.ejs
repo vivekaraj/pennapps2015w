@@ -8,6 +8,7 @@
   </head>
   <body>
     <h1> Order confirmation! </h1> 
+    <% var grandTotal = 0; %>
     <% for(var i = 0; i < list.length; i++) { %>
       <% var json = JSON.parse(list[i]); %>
       <h2> <%=json.name%>: </h2>
@@ -18,8 +19,10 @@
         <% total = total + (+prices[j]); %>
         <%=foods[j]%> <%=prices[j]%> <br>
       <% } %>
+      <% grandTotal = grandTotal + total; %>
       <h2> TOTAL: <%=total%> </h2>
     <% } %> 
+    <h1> GRAND TOTAL: <%=Math.round(grandTotal * 100) / 100 %> </h1>
   </body>
 </html> 
 
