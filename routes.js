@@ -210,6 +210,24 @@ router.post('/submitFriends', function(req, res) {
           else console.log(resp);
         });
         console.log("DONE!");
+
+        setTimeout(function() {
+          var list = [];
+          list.push({email: req.session.useremail});
+
+          mandrill('/messages/send', {
+            message : {
+              to: list,
+              from_email: 'you@domain.com',
+              subject: 'Your GroupChow order is ready to be placed!',
+              text: "www.groupchow.herokuapp.com/finalOrder/room" + ct
+            }
+          }, function(err, resp) {
+            if(err) console.log(JSON.stringify(error));
+            else console.log(resp);
+          });
+        }, 10000);
+
         return res.render('orderPlaced', {
           title: 'Group Chow',
         });

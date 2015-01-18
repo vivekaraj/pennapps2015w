@@ -1,1 +1,1 @@
-[{"name":"You","orderedFoods":["Vegetable Spring Roll","Crab Dumpling"],"orderedPrices":["3.95","6.95"]}][{"name":"Vivek","orderedFoods":["Vegetable Spring Roll","Vegetable Dumpling"],"orderedPrices":["3.95","4.95"]}][{"name":"Sahil","orderedFoods":["Grilled Mix Vegetables","Chicken or Beef Satay"],"orderedPrices":["4.95","5.95"]}]
+[{"name":"You","orderedFoods":["Vegetable Spring Roll","Spring Roll"],"orderedPrices":["3.95","3.95"]}][{"name":"You","orderedFoods":["Vegetable Spring Roll","Vegetable Dumpling"],"orderedPrices":["3.95","4.95"]}]
