@@ -26,11 +26,7 @@ router.get('/incrCount', function(req, res) {
 router.post('/getRestaurant', function(req, res) {
   console.log("function starting..");
   var menuurl = "http://api.locu.com/v1_0/venue/search/?has_menu=TRUE&name=" + req.body.restname +"&locality=" + req.body.city + "&region=" + req.body.state + "&api_key=99018cb9712f77ed7276576673b997470cd3f9ec";
-
-  curl.request({
-    url: 'http://api.locu.com/v2/venue/search'
-    method: 'POST',
-    data: {
+  var d = JSON.stringify({
       "api_key" : "99018cb9712f77ed7276576673b997470cd3f9ec",
       "fields" : [ "name", "menus" ],
       "venue_queries" : [
@@ -46,9 +42,14 @@ router.post('/getRestaurant', function(req, res) {
           "price" : {"$present" : true}
         }
       ]
-    }
+    });
+  curl.request({
+    url: 'http://api.locu.com/v2/venue/search',
+    method: 'POST',
+    data: d
   }, function (err, data, meta) {
-      console.log("function entered..");
+      console.log(data);
+      console.log("blah");
   });
 
   console.log("function done..");
