@@ -68,6 +68,8 @@ router.post('/getRestaurant', function(req, res) {
               var content = contents[l];
               foods.push(content.name);
               prices.push(content.price);
+              req.session.foods = foods;
+              req.session.prices = prices;
               console.log("Name: " + content.name);
               console.log("Price: " + content.price);
             }
@@ -82,6 +84,33 @@ router.post('/getRestaurant', function(req, res) {
       console.log("exits");
   });
 
+});
+
+router.post('/submitUserOrder', function(req, res) {
+  var foods = req.session.foods;
+  var prices = req.session.prices;
+  var orderedFoods = [];
+  var orderedPrices = [];
+  for(var i = 0; i < foods.length; i++) {
+    var bool = "0";
+    eval("bool = req.body.food" + i);
+    console.log(i + "//" + bool);
+    if(bool != null && "" + bool === "1") {
+      orderedFoods.push(foods[i]);
+      orderedPrices.push(prices[i]);
+    }
+  }
+  req.session.orderedFoods = orderedFoods;
+  req.session.orderedPrices = orderedPrices;
+  var name = "You";
+  var val = [];
+  val.push({
+    name: name,
+    orderedFoods: orderedFoods,
+    orderedPrices: orderedPrices
+  });
+  var order = "" + JSON.stringify(val);
+  req.session.order = order;
 });
 
 

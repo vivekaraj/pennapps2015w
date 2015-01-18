@@ -7,8 +7,12 @@
   <body>
     <a href='/getFriends'>Go to getFriends</a>
     <h2> Enter friends' email addresses </h2>
-    <% for(var i = 0; i < foods.length; i++) { %>
-        Food: <%=foods[i] %> Price: <%=prices[i]%> <br>
-    <% } %>
+    <form action='/submitUserOrder' method='post'>
+
+        <% for(var i = 0; i < foods.length; i++) { %>
+            Food: <%=foods[i] %> Price: <%=prices[i]%> <input type="checkbox" name="food<%=i%>" value="1"> <br>
+        <% } %>
+    <input id="button" type='submit' value='Submit' style="font-size: 2em"> 
+    </form>
   </body>
 </html> 
