@@ -207,7 +207,7 @@ router.post('/submitFriends', function(req, res) {
           to: formattedList,
           from_email: 'you@domain.com',
           subject: "New GroupChow request from " + req.session.username + "!",
-          text: "www.groupchow.herokuapp.com/theGroupChow/room" + ct
+          text: "groupchow.herokuapp.com/theGroupChow/room" + ct
         }
         }, function(err, resp)
         {
@@ -225,7 +225,7 @@ router.post('/submitFriends', function(req, res) {
               to: list,
               from_email: 'you@domain.com',
               subject: 'Your GroupChow order is ready to be placed!',
-              text: "www.groupchow.herokuapp.com/finalOrder/room" + ct
+              text: "groupchow.herokuapp.com/finalOrder/room" + ct
             }
           }, function(err, resp) {
             if(err) console.log(JSON.stringify(error));
