@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+ <link rel='stylesheet' href='stylesheets/bootstrap.min.css'>
+ <link rel='stylesheet' href='stylesheets/bootstrap-responsive.css'>
+
+<html>
+  <head>
+    <title><%=title%></title>
+  </head>
+  <body>
+    <h1> Order confirmation! </h1> 
+    <% for(var i = 0; i < list.length; i++) { %>
+      <% var json = JSON.parse(list[i]); %>
+      <h2> <%=json.name%>: </h2>
+      <% var foods = json.orderedFoods; %>
+      <% var prices = json.orderedPrices; %>
+      <% var total = 0; %>
+      <% for(var j = 0; j < foods.length; j++) {%>
+        <% total = total + (+prices[j]); %>
+        <%=foods[j]%> <%=prices[j]%> <br>
+      <% } %>
+      <h2> TOTAL: <%=total%> </h2>
+    <% } %> 
+  </body>
+</html> 
+

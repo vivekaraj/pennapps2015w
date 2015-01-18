@@ -4,6 +4,8 @@ var curl = require('curlrequest');
 var Postmates = require('postmates');
 var postmates = new Postmates('cus_KAefIoO_AD5TbV', '334e74ce-2d20-4055-9480-f39f9a385e12');
 var fs = require('fs');
+var mandrill = require('node-mandrill')('YC4wihw55JFZz1p87ZDiUg');
+
 
 //email stuff - should be straightforward
 
@@ -34,6 +36,7 @@ router.get('/incrCount', function(req, res) {
 
 router.post('/getRestaurant', function(req, res) {
   req.session.username = req.body.username;
+  req.session.useremail = req.body.useremail;
   req.session.userstreet = req.body.userstreet;
   req.session.usercity = req.body.usercity;
   req.session.userstate = req.body.userstate;
@@ -194,7 +197,6 @@ router.post('/submitFriends', function(req, res) {
     var ct = (+data.toString() + 1);
     fs.unlink('data/numUsers.txt', function(err) {
       fs.appendFile('data/numUsers.txt', "" + ct, function(err) {
-        var mandrill = require('node-mandrill')('YC4wihw55JFZz1p87ZDiUg');
         mandrill('/messages/send', {
         message: {
           to: formattedList,
@@ -343,6 +345,20 @@ router.post('/submitFriendOrder', function(req, res) {
 
   res.render('friendOrderPlaced', {
     title: 'Group Chow',
+  });
+});
+
+router.get('/finalOrder/:room', function(req, res) {
+  fs.readFile('data/data.txt', function(err, data) {
+    if(err)
+      throw err;
+    var str = data.toString();
+    var temp = str.substring(1, str.length-1);
+    var list = temp.split("][");
+    res.render('orderConfirmation', {
+      title:'Group Chow',
+      list:list
+    });
   });
 });
 
